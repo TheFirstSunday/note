@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, ReactElement } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
 
@@ -10,10 +10,10 @@ export type EllipsisTextParams = {
   text: string | any;
   length: number;
   tooltip: boolean;
-  [propName: string]: any
+  [propName: string]: any;
 };
 
-function EllipsisText({ text, length, tooltip, ...other }: EllipsisTextParams){
+function EllipsisText({ text, length, tooltip, ...other }: EllipsisTextParams) {
   if (typeof text !== 'string') {
     throw new Error('Ellipsis children must be string.');
   }
@@ -48,12 +48,12 @@ function EllipsisText({ text, length, tooltip, ...other }: EllipsisTextParams){
 }
 
 export type EllipsisParams = {
-  children: React.ReactElement,
+  children: React.ReactElement;
   lines: number;
   length: number;
   className?: string;
   tooltip: boolean;
-  [propName: string]: any
+  [propName: string]: any;
 };
 
 const bisection = (
@@ -62,7 +62,8 @@ const bisection = (
   b: number,
   e: any,
   text: string,
-  shadowNode: { innerHTML: string; offsetHeight: any; }): number => {
+  shadowNode: HTMLElement,
+): number => {
   const suffix = '...';
   let mid = m;
   let end = e;
@@ -96,23 +97,31 @@ const bisection = (
   }
 };
 
-function Ellipsis({ children, lines, length, className, tooltip = true, ...restProps }: EllipsisParams) {
+function Ellipsis({
+  children,
+  lines,
+  length,
+  className,
+  tooltip = true,
+  ...restProps
+}: EllipsisParams) {
   const [text, setText] = useState<string>('');
   const [targetCount, setTargetCount] = useState<number>(0);
   const node = useRef<HTMLSpanElement>(null);
-  const shadow = useRef<{ firstChild: HTMLElement }>(null);
-  const shadowChildren = useRef<{ innerText: string; offsetHeight: number }>(null);
+  const shadow = useRef<HTMLDivElement>(null);
+  const shadowChildren = useRef<HTMLDivElement>(null);
   const root = useRef<HTMLDivElement>(null);
   const content = useRef<HTMLDivElement>(null);
 
   const computeLine = () => {
     if (lines && !isSupportLineClamp) {
       const innerText = shadowChildren.current!.innerText;
-      const lineHeight = parseInt(window.getComputedStyle(root).lineHeight, 10);
+      const lineHeight = parseInt(window.getComputedStyle(root as any).lineHeight, 10);
       const targetHeight = lines * lineHeight;
+      // @ts-ignore
       content.style.height = `${targetHeight}px`;
       const totalHeight = shadowChildren.current!.offsetHeight;
-      const shadowNode = shadow.current!.firstChild;
+      const shadowNode = shadow.current!.firstChild as HTMLElement;
 
       if (totalHeight <= targetHeight) {
         setText(innerText);
@@ -155,7 +164,15 @@ function Ellipsis({ children, lines, length, className, tooltip = true, ...restP
 
   // length
   if (!lines) {
-    return <EllipsisText className={cls} length={length} text={children || ''} tooltip={tooltip} {...restProps} />;
+    return (
+      <EllipsisText
+        className={cls}
+        length={length}
+        text={children || ''}
+        tooltip={tooltip}
+        {...restProps}
+      />
+    );
   }
 
   const id = `text-ellipsis-${`${new Date().getTime()}${Math.floor(Math.random() * 100)}`}`;

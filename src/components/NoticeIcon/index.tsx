@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Tag, message } from 'antd';
 import { groupBy } from 'lodash';
 import moment from 'moment';
+// @ts-ignore
 import { useModel, useRequest } from 'umi';
 import { getNotices } from '@/services/ant-design-pro/api';
 

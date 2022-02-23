@@ -2,6 +2,7 @@ import React from 'react';
 import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
 import { Card, Typography, Alert } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+// @ts-ignore
 import { useIntl } from 'umi';
 
 const Admin: React.FC = () => {

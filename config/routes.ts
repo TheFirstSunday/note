@@ -29,10 +29,10 @@
     redirect: '/welcome',
   },
   {
-    path: '/chat-room',
-    name: 'home',
+    path: '/charts',
+    name: 'charts',
     icon: 'table',
-    component: './chat-room',
+    component: './charts',
   },
   {
     component: './404',

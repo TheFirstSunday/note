@@ -35,6 +35,12 @@
     component: './charts',
   },
   {
+    path: '/take-photo',
+    name: 'webrtc',
+    icon: 'table',
+    component: './TakePhoto',
+  },
+  {
     component: './404',
   },
 ];

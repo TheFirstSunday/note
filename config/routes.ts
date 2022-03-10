@@ -32,13 +32,19 @@
     path: '/charts',
     name: 'charts',
     icon: 'table',
-    component: './charts',
+    component: './Charts',
   },
   {
     path: '/take-photo',
     name: 'webrtc',
     icon: 'table',
     component: './TakePhoto',
+  },
+  {
+    path: '/lucky',
+    name: 'lucky',
+    icon: 'table',
+    component: './Game',
   },
   {
     component: './404',
